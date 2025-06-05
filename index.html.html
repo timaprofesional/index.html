@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zegar, Spadające Kwiaty, Jajko i Życzenia</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #87CEEB; /* Niebieskie tło */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    #clock {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      color: #d63384;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ffb3c6;
+      z-index: 1000;
+    }
+
+    .flower {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      animation: fall linear;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    #egg {
+      position: fixed;
+      right: 20px;
+      bottom: 50px;
+      width: 120px;
+      height: 120px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Easter_egg_decorated.jpg') no-repeat center center;
+      background-size: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ffb3c6;
+    }
+
+    #wishes {
+      position: fixed;
+      left: 20px;
+      bottom: 50px;
+      font-size: 2rem;
+      color: #6c3d75;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ffb3c6;
+    }
+  </style>
+</head>
+<body>
+  <div id="clock">00:00:00</div>
+  <div id="egg"></div>
+  <div id="wishes">Wesołych Świąt Wielkanocnych!</div>
+
+  <script>
+    // Zegar
+    function updateClock() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('pl-PL');
+      document.getElementById('clock').textContent = timeString;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Kwiaty
+    const flowerEmoji = ['🌸'];
+
+    function createFlower() {
+      const flower = document.createElement('div');
+      flower.className = 'flower';
+      flower.textContent = flowerEmoji[Math.floor(Math.random() * flowerEmoji.length)];
+      flower.style.left = Math.random() * 100 + 'vw';
+      flower.style.animationDuration = 4 + Math.random() * 4 + 's';
+      flower.style.fontSize = (20 + Math.random() * 20) + 'px';
+      document.body.appendChild(flower);
+
+      setTimeout(() => {
+        flower.remove();
+      }, 8000);
+    }
+
+    setInterval(createFlower, 300);
+  </script>
+</body>
+</html>
